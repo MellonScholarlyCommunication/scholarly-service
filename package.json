@@ -1,0 +1,23 @@
+{
+  "name": "scholarly-service",
+  "version": "1.0.0",
+  "description": "Library to set up a Scholarly Service provider",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist/ && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MellonScholarlyCommunication/scholarly-service.git"
+  },
+  "author": "Ieben Smessaert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MellonScholarlyCommunication/scholarly-service/issues"
+  },
+  "homepage": "https://github.com/MellonScholarlyCommunication/scholarly-service#readme",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
