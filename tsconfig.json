@@ -1,15 +1,16 @@
 {
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "skipLibCheck": true,
-  }
+    "outDir": "lib/",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node"
+  },
+  "allowJs": true,
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }
