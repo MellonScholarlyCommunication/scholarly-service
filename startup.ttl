@@ -10,8 +10,8 @@
 
 
 js:GenerateExample a js:JsProcess;
-                   js:file <./lib/generate.js>;
-                   js:function "generate";
+                   js:file <./lib/startup.js>;
+                   js:function "startup";
                    js:location <./>;
                    js:mapping [
                          a fno:Mapping;
@@ -20,13 +20,29 @@ js:GenerateExample a js:JsProcess;
                                a fnom:PositionParameterMapping ;
                                fnom:functionParameter js:dataOutput;
                                fnom:implementationParameterPosition "0"^^xsd:int
+                           ],[
+                               a fnom:PositionParameterMapping ;
+                               fnom:functionParameter js:hostname;
+                               fnom:implementationParameterPosition "1"^^xsd:int
+                           ],[
+                               a fnom:PositionParameterMapping ;
+                               fnom:functionParameter js:port;
+                               fnom:implementationParameterPosition "2"^^xsd:int
                            ]
                      ].
 
 [] a sh:NodeShape;
    sh:targetClass js:GenerateExample;
    sh:property [
-         sh:class :WriterChannel;
-         sh:path js:dataOutput;
-         sh:name "Data output channel";
-     ].
+        sh:class :WriterChannel;
+        sh:path js:dataOutput;
+        sh:name "Data output channel";
+   ], [
+        sh:dataType xsd:string;
+        sh:path js:hostname;
+        sh:name "Hostname to use for the HTTP server.";
+   ], [
+        sh:dataType xsd:integer;
+        sh:path js:port;
+        sh:name "Port to use for the HTTP server.";
+   ].

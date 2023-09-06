@@ -12,7 +12,7 @@
            <https://raw.githubusercontent.com/TREEcg/connector-architecture/main/channel/kafka.ttl>,
            <https://raw.githubusercontent.com/ajuvercr/js-runner/master/ontology.ttl>.
 
-<> owl:imports <./generate.ttl>.
+<> owl:imports <./startup.ttl>.
 <> owl:imports <./node_modules/sds-processors/configs/2_bucketstep.ttl>.
 <> owl:imports <./node_modules/sds-processors/configs/sdsify.ttl>.
 <> owl:imports <./node_modules/@treecg/sds-storage-writer-mongo/step.ttl>.
