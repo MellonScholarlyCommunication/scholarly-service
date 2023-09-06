@@ -43,3 +43,63 @@ npm run ingest
 # Start the Solid Server
 npm run solid
 ```
+
+## Usage
+
+### Adding a LDES event
+
+To store a new event in the LDES, you can send a POST request to the `/ldes/` endpoint of the Ingest service.
+By default, this service runs on `http://localhost:8080/`.
+This means that you could add a new event to the LDES using the following command:
+
+```bash
+curl --location 'http://localhost:8080/ldes/' \
+--header 'Content-Type: application/ld+json' \
+--data-raw '{
+    "@context": "https://www.w3.org/ns/activitystreams",
+    "id": "urn:uuid:3ba92ea8-5416-458a-96ce-5773b556c875",
+    "type": "Announce",
+    "published": "2018-03-26",
+    "actor": {
+        "id": "https://scholexplorer.openaire.eu/#about",
+        "name": "OpenAIRE ScholeXplorer",
+        "inbox": "https://scholexplorer.openaire.eu/inbox/",
+        "type": "Organization"
+    },
+    "origin": {
+        "id": "https://mellonscholarlycommunication.github.io/about#us",
+        "name": "UGent/Mellon JSON-LD/AS2 Notification Generator for Scholix",
+        "type": "Application"
+    },
+    "object": {
+        "id": "urn:uuid:2fe6dd1f-39c4-47e8-b0a0-ab6ab79e0749",
+        "type": "Relationship",
+        "relationship": "http://www.scholix.org/IsReferencedBy",
+        "subject": "https://dx.doi.org/10.5281/zenodo.2630550",
+        "object": "http://aclweb.org/anthology/N18-1140"
+    },
+    "context": "http://aclweb.org/anthology/N18-1140",
+    "target": {
+        "id": "https://bellow2.ugent.be/test/scholix/antwerpen/aclweb.org/about#us",
+        "inbox": "https://bellow2.ugent.be/test/scholix/antwerpen/aclweb.org/inbox/",
+        "type": "Organization"
+    }
+}'
+```
+
+#### Supported Content-Types
+There are multiple supported Content-Types for the POST request:
+- `application/ld+json`
+- `text/turtle`
+- `application/n-triples`
+- `application/n-quads`
+
+### Retrieving the LDES
+
+To retrieve the LDES, you can send a GET request to the `/ldes/` endpoint of the Solid Server.
+By default, this service runs on `http://localhost:3000/`.
+This means that you could retrieve the LDES using the following command:
+
+```bash
+curl http://localhost:3000/ldes/
+```

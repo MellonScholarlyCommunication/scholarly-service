@@ -1,6 +1,7 @@
 import {Writer} from "@treecg/connector-types";
 import {Parser, Quad} from "n3";
 import * as http from "http";
+import jsonld from "jsonld";
 
 async function _startup(
   writer: Writer<Quad[]>,
@@ -10,10 +11,28 @@ async function _startup(
 
   const server = http.createServer((req, res) => {
     if (req.method === "POST" && req.url === "/ldes/") {
+      const supportedContentTypes = ["text/turtle", "text/n3", "application/n-triples", "application/n-quads", "application/ld+json"];
+      // Check Content-Type of request
+      if (!supportedContentTypes.includes(req.headers['content-type'] ?? '')) {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.end(`Bad request: Invalid Content-Type. Only ${supportedContentTypes.join(', ')} are supported.`);
+        return;
+      }
       let body = '';
       req.on("data", chunk => body += chunk);
       req.on("end", async () => {
         try {
+          // If Content-Type is JSON-LD, convert to N-Quads
+          if (req.headers['content-type'] === 'application/ld+json') {
+            try {
+              body = await jsonld.toRDF(JSON.parse(body), {format: 'application/n-quads'}) as unknown as string;
+            } catch (e: any) {
+              res.writeHead(400, {'Content-Type': 'text/plain'});
+              res.end('Bad request: Invalid JSON-LD: ' + e.message);
+              return;
+            }
+          }
+
           const qs = new Parser().parse(body);
           await new Promise(res => setTimeout(res, 200));
           await writer.push(qs);
