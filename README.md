@@ -109,3 +109,17 @@ This means that you could retrieve the LDES using the following command:
 ```bash
 curl http://localhost:3000/ldes/
 ```
+
+### Cleanup 
+
+To stop the MongoDB instance run: 
+
+```
+docker-compose stop
+```
+
+To stop and remove containers, networks of MongoDB run:
+
+```
+docker-compose down
+```
