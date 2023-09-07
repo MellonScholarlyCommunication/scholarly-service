@@ -10,10 +10,11 @@ async function _startup(
 ) {
 
   const server = http.createServer((req, res) => {
+    const contentType = (req.headers['content-type'] ?? '').split(';')[0];
     if (req.method === "POST" && req.url === "/ldes/") {
       const supportedContentTypes = ["text/turtle", "text/n3", "application/n-triples", "application/n-quads", "application/ld+json"];
       // Check Content-Type of request
-      if (!supportedContentTypes.includes(req.headers['content-type'] ?? '')) {
+      if (!supportedContentTypes.includes(contentType)) {
         res.writeHead(400, {'Content-Type': 'text/plain'});
         res.end(`Bad request: Invalid Content-Type. Only ${supportedContentTypes.join(', ')} are supported.`);
         return;
@@ -23,7 +24,7 @@ async function _startup(
       req.on("end", async () => {
         try {
           // If Content-Type is JSON-LD, convert to N-Quads
-          if (req.headers['content-type'] === 'application/ld+json') {
+          if (contentType === 'application/ld+json') {
             try {
               body = await jsonld.toRDF(JSON.parse(body), {format: 'application/n-quads'}) as unknown as string;
             } catch (e: any) {
@@ -56,7 +57,7 @@ async function _startup(
 
 export async function startup(
   writer: Writer<Quad[]>,
-  hostname: string = "localhost",
+  hostname: string = "127.0.0.1",
   port: number = 8080,
 ) {
   _startup(writer, hostname, port);
