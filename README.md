@@ -41,7 +41,7 @@ You can run the Scholarly Service using the following commands:
 npm run ingest
 
 # Start the Solid Server
-npm run solid
+npm run server
 ```
 
 ## Usage
@@ -85,6 +85,12 @@ curl --location 'http://localhost:8080/ldes/' \
         "type": "Organization"
     }
 }'
+```
+
+or use a command line tool:
+
+```
+bin/post.sh demo/announce.jsonld
 ```
 
 #### Supported Content-Types
